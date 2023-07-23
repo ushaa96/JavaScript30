@@ -58,10 +58,42 @@
   <audio data-key="75" src="sounds/tom.wav"></audio>
   <audio data-key="76" src="sounds/tink.wav"></audio>
 
-<script>
+  <script>
 
-</script>
-
+    function playSound(e) {
+     const audio = document.querySelector(`audio[data-key="${e.code}"]`);
+     const key = document.querySelector(`.key[data-key="${e.code}"]`);
+   
+     if(!audio) return; 
+     audio.currentTime = 0; //rewind to the start
+     audio.play(); 
+     key.classList.add('playing');
+     }
+   
+     function removeTransition(e) {
+       if(e.propertyName !== 'transform') return; 
+       this.classList.remove('playing');
+     }
+   
+     const keys = document.querySelectorAll('.key');
+     keys.forEach(key => key.addEventListener('transitionend',removeTransition));
+     window.addEventListener('keydown',playSound);
+   // transitionend is a standard DOM element. 
+   //first we added keydown dom element, when key down is pressed, we ran a function
+   //that first allowed us to fetch the audio corresponding to the key pressed
+   //we specifically called it data-key, ran a function to get the corresponding
+   //audio. Next, we got the class of key assigned to const key 
+   // if there is no audio return 
+   // next to get the big yellow boxes we added classlist of playing 
+   // next we had to remove the transition, so got the full div and from that
+   // dive we removed the class of playing. 
+   // we then selected all the element with .key class and added them to const keys
+   // keys is now an array. then we added a function where for each items in keys
+   // we ran a function .key and looked for transition end and then ran the function
+   // removetransition 
+   
+   
+   </script>
 
 </body>
 </html>
